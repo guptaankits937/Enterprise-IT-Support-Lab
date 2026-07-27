@@ -1,65 +1,70 @@
-# Hi, I'm Ankit Gupta 👋
+# Enterprise IT Support Lab
 
-## IT Support, Database Administration and Cybersecurity Professional
+## Overview
 
-I am an IT professional based in Sweden with experience in system and database administration, application support, SQL Server, incident investigation, and web technologies.
+This repository demonstrates an enterprise-style IT Support environment designed to practice real-world Application Support, Linux Administration, SQL Database Administration, Incident Management, Monitoring, Automation, and Operational Documentation.
 
-I hold a Master's degree in Digital Forensics and am currently refreshing and demonstrating my technical experience through practical enterprise-style labs and documented troubleshooting scenarios.
+The objective is to simulate production support activities and document practical troubleshooting scenarios that are commonly performed by Application Support Engineers and Production Support Teams.
 
-## Current Focus
+---
 
-* Application and Production Support
-* Linux System Administration
-* SQL Database Administration
-* Incident Management and Root Cause Analysis
-* Bash Automation and Operational Monitoring
-* Windows Event Investigation
-* Microsoft Sentinel and Security Operations
+## Project Goals
 
-## Portfolio Projects
+- Build a production-like IT support environment
+- Practice Linux administration
+- Practice SQL database administration
+- Troubleshoot real-world application issues
+- Perform incident investigation and root cause analysis
+- Create professional operational documentation
+- Develop automation scripts
+- Build an interview-ready GitHub portfolio
 
-### Enterprise IT Support Lab
+---
 
-An enterprise-style lab covering Linux administration, SQL database support, application troubleshooting, monitoring, automation, incident management, runbooks, and root-cause analysis.
+## Project Structure
 
-### Windows Event Investigation
+01-Linux-Administration
 
-Hands-on investigation of Windows authentication, process execution, PowerShell activity, and other security-relevant events.
+02-SQL-Administration
 
-### Microsoft Sentinel Lab
+03-Application-Support
 
-Planned cloud SIEM project covering log ingestion, KQL queries, analytics rules, alert triage, and incident investigation.
+04-Monitoring
 
-## Technical Skills
+05-Automation
 
-**Application Support:** Incident triage, troubleshooting, log analysis, root-cause analysis, service restoration and technical documentation
+06-Incident-Management
 
-**Systems:** Linux, Windows, user administration, permissions, services, networking and system monitoring
+07-Documentation
 
-**Database:** Microsoft SQL Server, SQL queries, backup and restore, access management and database troubleshooting
+08-Screenshots
 
-**Automation:** Bash scripting, health checks, log collection and operational support scripts
+---
 
-**Cybersecurity:** Digital forensics, Windows Event Logs, incident response, SIEM fundamentals and Microsoft Sentinel
+## Technologies
 
-## Professional Background
+- Linux
+- Windows
+- SQL Server
+- Bash
+- Git
+- GitHub
 
-* System and Database Administration
-* Application and Technical Support
-* Web Application Development
-* Operational Leadership and Team Management
+---
 
-## Current Goal
+## Future Enhancements
 
-I am building a practical and documented portfolio for opportunities in:
+- Windows Event Investigation
+- Microsoft Sentinel
+- Incident Response
+- Threat Hunting
+- KQL Queries
+- SIEM Integration
 
-* Application Support Engineering
-* Application Maintenance
-* Production Support
-* SQL Database Administration
-* Security Operations and SOC Analysis
+---
 
-## Connect With Me
+## Author
 
-* Location: Stockholm, Sweden
-* GitHub: [github.com/guptaankits937](https://github.com/guptaankits937)
+Ankit Gupta
+
+Stockholm, Sweden
