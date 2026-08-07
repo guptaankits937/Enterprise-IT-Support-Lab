@@ -1,150 +1,231 @@
-Linux User Management
-Lab Information
-Lab Name: Linux User Management
+# Linux User Management
 
-Project: Enterprise IT Support Lab
+## Lab Information
 
-Date: 05 August 2026
+**Lab Name:** Linux User Management  
+**Project:** Enterprise IT Support Lab  
+**Date:** 05 August 2026  
+**Operating System:** Ubuntu Server  
 
-Operating System: Ubuntu Server
-
-Objective:
+### Objective
 
 Learn how to create a new Linux user, assign a password, verify the account, and validate the user's home directory using enterprise administration practices.
 
-Ticket Information
-Ticket ID: INC-0001
+---
 
-Department: IT Operations
+## Ticket Information
 
-Priority: Medium
+**Ticket ID:** INC-0001  
+**Department:** IT Operations  
+**Priority:** Medium  
+**Status:** Completed  
 
-Status: Completed
+---
 
-Scenario
+## Scenario
+
 A new employee joined the company.
 
 The IT Operations team received a request from Human Resources (HR) to create a new Linux account for the employee.
 
 The account must be created securely, assigned a password, and verified before handing it over to the employee.
 
-Environment
-Ubuntu Server
-Terminal
-Sudo Privileges
-Local User Management
-Lab Duration
-Estimated Time: 20–30 Minutes
+---
 
-Commands Used
-Check Current Logged-in User
+## Environment
+
+- Ubuntu Server
+- Terminal
+- Sudo Privileges
+- Local User Management
+
+---
+
+## Lab Duration
+
+**Estimated Time:** 20–30 Minutes
+
+---
+
+## Commands Used
+
+### Check Current Logged-in User
+
+```bash
 whoami
-Purpose:
+```
 
+**Purpose:**  
 Verify the currently logged-in user before performing administrative tasks.
 
-Display User Information
+---
+
+### Display User Information
+
+```bash
 id
-Purpose:
+```
 
-Display:
+**Purpose:**  
+Display information about the current user, including:
 
-User ID (UID)
-Group ID (GID)
-User Groups
-Check Hostname
+- User ID (UID)
+- Group ID (GID)
+- User Groups
+
+---
+
+### Check Hostname
+
+```bash
 hostname
-Purpose:
+```
 
+**Purpose:**  
 Identify the current Linux server.
 
-Create New User
+---
+
+### Create New User
+
+```bash
 sudo useradd -m john
-Purpose:
+```
 
-Create a new Linux user named john.
+**Purpose:**  
+Create a new Linux user named `john`.
 
-The -m option automatically creates the user's home directory.
+The `-m` option automatically creates the user's home directory.
 
-Set Password
+---
+
+### Set Password
+
+```bash
 sudo passwd john
-Purpose:
+```
 
+**Purpose:**  
 Assign a password to the newly created user.
 
-Verify User
+---
+
+### Verify User
+
+```bash
 id john
-Purpose:
+```
 
-Verify that the new user account has been created successfully.
+**Purpose:**  
+Verify that the new user account has been created successfully and display its UID, GID, and group membership.
 
-Verify Home Directory
+---
+
+### Verify Home Directory
+
+```bash
 ls /home
-Purpose:
+```
 
+**Purpose:**  
 Confirm that the user's home directory was created successfully.
 
-Verification Results
+---
+
+## Verification Results
+
 The following checks confirmed successful user creation:
 
-User "john" exists.
-Password assigned successfully.
-Home directory created.
-User information verified.
-Troubleshooting
-Issue
-Incorrect command entered:
+- User `john` exists.
+- Password was assigned successfully.
+- User information was verified.
+- Home directory was created successfully.
 
+---
+
+## Troubleshooting
+
+### Issue
+
+While assigning the password, an incorrect username was entered:
+
+```bash
 sudo passwd joh
-Result:
+```
 
+The system returned:
+
+```text
 passwd: user 'joh' does not exist
-Resolution:
+```
 
-Corrected the username:
+### Resolution
 
+The username was corrected and the command was executed again:
+
+```bash
 sudo passwd john
-Password updated successfully.
+```
 
-Evidence
-Screenshots
+The password was then updated successfully.
 
-01-whoami.png
-02-id-command.png
-03-password-updated.png
-04-id-john.png
-05-home-directories.png
-Lessons Learned
-Verified the currently logged-in user.
-Understood UID and GID.
-Learned the importance of the hostname.
-Created a Linux user.
-Assigned a password.
-Verified the user account.
-Verified the home directory.
-Understood the purpose of the -m option.
-Learned how to troubleshoot an incorrect username.
-Skills Demonstrated
-Linux User Administration
-User Account Management
-Password Management
-Linux Verification Commands
-Basic Troubleshooting
-System Administration
-Outcome
-Successfully completed the Linux User Management lab by creating and verifying a new user account using enterprise administration practices.
+This demonstrated the importance of verifying usernames when performing user-administration tasks.
+
+---
+
+## Evidence
+
+The following screenshots were captured during the lab:
+
+1. `01-whoami.png` — Verified the currently logged-in user.
+2. `02-id-command.png` — Displayed UID, GID, and group information.
+3. `03-password-updated.png` — Confirmed successful password assignment.
+4. `04-id-john.png` — Verified the newly created `john` account.
+5. `05-home-directories.png` — Confirmed creation of the user's home directory.
+
+---
+
+## Lessons Learned
+
+During this lab, I learned how to:
+
+- Verify the currently logged-in Linux user.
+- Understand basic UID and GID information.
+- Identify the Linux server using the hostname.
+- Create a new Linux user account.
+- Automatically create a home directory using the `-m` option.
+- Assign a password to a user account.
+- Verify a newly created account.
+- Confirm creation of the user's home directory.
+- Troubleshoot an incorrect username during password configuration.
+
+---
+
+## Skills Demonstrated
+
+- Linux User Administration
+- User Account Management
+- Password Management
+- Linux Verification Commands
+- Basic Troubleshooting
+- System Administration
+- Technical Documentation
+
+---
+
+## Outcome
+
+Successfully completed the Linux User Management lab by creating, configuring, and verifying a new Linux user account using standard Linux administration commands.
+
+The account was successfully created with its own home directory, assigned a password, and verified using Linux user-management commands.
+
+---
 
 ## Repository Information
 
-Repository: Enterprise-IT-Support-Lab
-
-Documentation: 02-Linux/03-Linux-User-Management/Documentation/Linux-User-Management.md
-
-Screenshots: 02-Linux/03-Linux-User-Management/Screenshots/
-
-Status: Completed
-
-Version: 1.0
-
-
-
+**Repository:** Enterprise-IT-Support-Lab  
+**Lab:** `02-Linux/03-Linux-User-Management/`  
+**Documentation:** `02-Linux/03-Linux-User-Management/Documentation/Linux-User-Management.md`  
+**Screenshots:** `02-Linux/03-Linux-User-Management/Screenshots/`  
+**Status:** Completed  
+**Version:** 1.0
