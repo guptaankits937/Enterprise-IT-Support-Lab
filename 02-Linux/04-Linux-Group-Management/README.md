@@ -56,6 +56,43 @@ sudo usermod -aG it-support john
 getent group it-support
 sudo gpasswd -d john it-support
 sudo groupdel it-support
+```
+
+---
+
+## Skills Demonstrated
+
+- Linux Group Administration
+- User and Group Management
+- Access Management
+- Primary and Supplementary Groups
+- Linux Verification Commands
+- Basic Troubleshooting
+- System Administration
+- Technical Documentation
+
+---
+
+## Evidence
+
+Six screenshots were captured during the lab to demonstrate the complete Linux group-management lifecycle.
+
+The evidence covers:
+
+- Current user and group verification
+- Group creation and verification
+- Existing user verification
+- Adding a user to a supplementary group
+- Removing a user from the group
+- Group deletion and final verification
+
+Detailed commands, verification results, and screenshots are maintained within the lab documentation and evidence folders.
+
+---
+
+## Outcome
+
+Successfully completed the Linux Group Management lab by creating, assigning, verifying, removing, and cleaning up Linux group access using standard Linux administration commands.
 
 ---
 
@@ -68,4 +105,3 @@ sudo groupdel it-support
 **Screenshots:** Screenshots/  
 **Status:** Completed  
 **Version:** 1.0
-
