@@ -44,6 +44,18 @@ The lab includes permission modification, ownership changes, user-context access
 
 ---
 
+### 06 - Linux Service Management & Troubleshooting
+
+Linux service management and troubleshooting focused on SSH availability, systemd socket activation, controlled outage simulation, service recovery, log analysis, and remote-access verification.
+
+The lab also includes troubleshooting a VirtualBox host-to-VM connectivity issue and configuring a dedicated Host-Only management network using Netplan.
+
+**Skills:** Linux Troubleshooting, `systemctl`, `journalctl`, `ss`, SSH, systemd Socket Activation, Netplan, VirtualBox Networking
+
+[View Linux Service Management & Troubleshooting Lab](./06-Linux-Troubleshooting/)
+
+---
+
 ## Lab Structure
 
 Each lab follows a consistent documentation structure:
@@ -69,6 +81,13 @@ Each lab follows a consistent documentation structure:
 - User and Group Management
 - File Permission Management
 - Access Control
+- Linux Service Management
+- SSH Administration
+- systemd Service and Socket Management
+- Log Analysis
+- TCP/IP Troubleshooting
+- VirtualBox Networking
+- Netplan Configuration
 - Command-Line Troubleshooting
 - Incident-Style Technical Investigation
 - Verification and Validation
@@ -92,6 +111,6 @@ The project demonstrates practical skills relevant to IT Support, Application Su
 **Section:** 02-Linux  
 **Category:** Linux Administration  
 **Environment:** Ubuntu Server  
-**Completed Labs:** 03 - Linux User Management, 04 - Linux Group Management, 05 - Linux File Permissions  
+**Completed Labs:** 03 - Linux User Management, 04 - Linux Group Management, 05 - Linux File Permissions, 06 - Linux Service Management & Troubleshooting  
 **Status:** In Progress  
 **Version:** 1.0
