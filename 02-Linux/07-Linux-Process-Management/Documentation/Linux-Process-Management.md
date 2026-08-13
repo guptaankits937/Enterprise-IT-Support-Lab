@@ -1,208 +1,138 @@
-# Linux Process Management - Detailed Documentation
+# Linux Process Management
+
+## Lab Information
+
+**Lab Name:** Linux Process Management  
+**Project:** Enterprise IT Support Lab  
+**Date:** 13 August 2026  
+**Operating System:** Ubuntu Server
+
+### Objective
+
+Learn how to identify, investigate, monitor, terminate, and verify Linux processes using standard process-management commands and a structured troubleshooting approach.
+
+---
 
 ## Ticket Information
 
 **Ticket ID:** INC-0005  
 **Department:** IT Operations  
 **Priority:** Medium  
-**Status:** Completed  
-**Environment:** Ubuntu Server
+**Status:** Completed
 
 ---
 
-## Objective
+## Scenario
 
-The objective of this lab was to develop a practical understanding of Linux process investigation and management using a controlled application-support scenario.
+The IT Operations team received a report that a Linux-hosted application process had become unresponsive.
 
-The lab simulated an unresponsive Linux-hosted application process. A harmless `sleep` process was used to represent the affected application.
+A controlled `sleep` process was used to safely simulate the affected application.
 
-The investigation focused on identifying the process, examining its process information, monitoring system activity, applying the least disruptive corrective action, verifying the result, demonstrating forced termination, and performing final cleanup verification.
+The process needed to be identified and investigated before corrective action was taken. Graceful termination was performed first and verified.
 
----
+A second controlled process was then used to demonstrate forced termination using SIGKILL.
 
-## Incident Scenario
-
-An application hosted on a Linux server is reported as unresponsive.
-
-In a real support environment, immediately terminating an unknown process could cause service disruption or affect other users.
-
-The investigation therefore followed a structured workflow:
-
-**Observe → Identify → Investigate → Act → Verify → Clean Up**
-
-The objective was to understand the affected process before taking corrective action.
+Final verification was performed to confirm that no test processes remained running.
 
 ---
 
-## Step 1 - Review Running Processes
+## Environment
 
-### Command
+- Ubuntu Server
+- Linux Terminal
+- Bash Shell
+- Standard Linux Process Management Utilities
+- Controlled Lab Environment
+
+---
+
+## Lab Duration
+
+**Estimated Time:** 30–40 Minutes
+
+---
+
+## Commands Used
+
+### 1. Review Running Processes
 
 ```bash
 ps aux
 ```
 
-### Purpose
-
-The `ps aux` command was used to review currently running processes on the Linux server.
-
-It provides information such as:
-
-- Process owner
-- Process ID (PID)
-- CPU utilization
-- Memory utilization
-- Process state
-- Process start information
-- Executed command
-
-### Support Relevance
-
-During an application-support incident, reviewing running processes can help determine whether an expected application process is running and whether any process appears to be consuming unusual system resources.
+**Purpose:**  
+Display currently running processes and review information including process owner, PID, CPU usage, memory usage, process state, and command.
 
 ---
 
-## Step 2 - Review PID and PPID Information
-
-### Command
+### 2. Review PID and PPID Information
 
 ```bash
 ps -ef
 ```
 
-### Purpose
-
-This command provides a process listing that includes both the Process ID (PID) and Parent Process ID (PPID).
-
-A PID uniquely identifies a running process.
-
-A PPID identifies the parent process responsible for starting another process.
-
-### Support Relevance
-
-Understanding parent-child process relationships can help during troubleshooting when investigating how an application, script, service, or subprocess was started.
+**Purpose:**  
+Review running processes with PID and Parent Process ID (PPID) information to understand process relationships.
 
 ---
 
-## Step 3 - Monitor Processes in Real Time
-
-### Command
+### 3. Monitor Processes in Real Time
 
 ```bash
 top
 ```
 
-### Purpose
-
-The `top` utility was used to observe running processes and system resource utilization in real time.
-
-It displays information including:
-
-- CPU utilization
-- Memory utilization
-- Running processes
-- Process IDs
-- Process states
-- System load
-
-### Observation
-
-The server was operating normally during the controlled lab and no abnormal resource utilization was intentionally generated.
-
-### Support Relevance
-
-If an application becomes slow or unresponsive in a production environment, `top` can help determine whether high CPU or memory utilization may be contributing to the incident.
+**Purpose:**  
+Monitor running processes, CPU utilization, memory utilization, and system activity in real time.
 
 ---
 
-## Step 4 - Create a Controlled Application Process
-
-### Command
+### 4. Create a Controlled Background Process
 
 ```bash
 sleep 1000 &
 ```
 
-### Purpose
+**Purpose:**  
+Create a harmless background process to simulate the application process being investigated.
 
-A harmless background process was created to safely represent the simulated application.
-
-The `&` symbol runs the command in the background, allowing the terminal to remain available for further investigation.
-
-### Observation
-
-The shell returned:
+**Observed Result:**
 
 ```text
-[1] 1058
+PID: 1058
 ```
-
-The background process was assigned PID:
-
-```text
-1058
-```
-
-### Support Relevance
-
-Using a controlled process allowed process investigation and termination techniques to be practiced without affecting an actual application or service.
 
 ---
 
-## Step 5 - Identify the Target Process
-
-### Command
+### 5. Identify the Target Process
 
 ```bash
 ps aux | grep '[s]leep 1000'
 ```
 
-### Purpose
+**Purpose:**  
+Locate the controlled process and confirm its PID and process owner.
 
-The running process list was searched for the controlled `sleep 1000` process.
-
-The `[s]leep` pattern was used so that the `grep` command itself would not appear as a matching result.
-
-### Observation
-
-The process was identified with:
+**Observed Result:**
 
 ```text
-USER: ankit
+User: ankit
 PID: 1058
-COMMAND: sleep 1000
+Command: sleep 1000
 ```
-
-### Support Relevance
-
-Before terminating a process, the correct process should be identified to reduce the risk of stopping an unrelated application or system component.
 
 ---
 
-## Step 6 - Investigate Process Details
-
-### Command
+### 6. Investigate Process Details
 
 ```bash
 ps -o pid,ppid,user,stat,etime,cmd -p 1058
 ```
 
-### Purpose
+**Purpose:**  
+Inspect the target process before taking corrective action.
 
-The command displayed selected information specifically for PID `1058`.
-
-The fields examined were:
-
-- `PID` - Process ID
-- `PPID` - Parent Process ID
-- `USER` - Process owner
-- `STAT` - Process state
-- `ETIME` - Elapsed running time
-- `CMD` - Executed command
-
-### Observation
-
-The investigation showed:
+**Observed Result:**
 
 ```text
 PID: 1058
@@ -212,61 +142,32 @@ STAT: S
 CMD: sleep 1000
 ```
 
-The process state `S` indicated that the process was in a sleeping state.
-
-### Support Relevance
-
-This step demonstrates why a process should be investigated before corrective action is taken.
-
-The support engineer can confirm the process identity, owner, state, parent relationship, and command before deciding whether termination is appropriate.
+The `S` process state indicated that the process was sleeping.
 
 ---
 
-## Step 7 - Graceful Process Termination
-
-### Command
+### 7. Perform Graceful Termination
 
 ```bash
 kill 1058
 ```
 
-### Purpose
+**Purpose:**  
+Send SIGTERM to the target process and allow it to terminate gracefully.
 
-The controlled process was terminated using the standard `kill` command.
-
-Without specifying another signal, `kill` sends SIGTERM.
-
-SIGTERM requests that the process terminate and allows the process an opportunity to shut down normally.
-
-### Why SIGTERM First?
-
-Graceful termination is generally preferable to forced termination because an application may need an opportunity to:
-
-- Close resources
-- Complete cleanup operations
-- Release files
-- Close connections
-- Perform its normal shutdown procedure
-
-For this reason, forced termination should not automatically be the first response to an unresponsive process.
+Graceful termination was attempted before using forced termination.
 
 ---
 
-## Step 8 - Verify Graceful Termination
-
-### Command
+### 8. Verify Graceful Termination
 
 ```bash
 ps -p 1058 -o pid,ppid,user,stat,cmd
 ```
 
-### Purpose
+**Observed Result:**
 
-The process table was checked specifically for PID `1058`.
-
-### Observation
-
-The command displayed the column headings but no process entry for PID `1058`.
+No process entry was returned for PID `1058`.
 
 The shell also reported:
 
@@ -274,197 +175,126 @@ The shell also reported:
 [1]+ Terminated sleep 1000
 ```
 
-This confirmed that the controlled process had successfully terminated.
-
-### Key Operational Principle
-
-Executing a corrective command does not by itself prove that an incident has been resolved.
-
-The result should be independently verified.
-
-The workflow therefore becomes:
-
-**Corrective Action → Verification → Resolution**
+**Purpose:**  
+Confirm that the corrective action successfully terminated the target process.
 
 ---
 
-## Step 9 - Create a Process for SIGKILL Testing
-
-### Command
+### 9. Create a Process for SIGKILL Testing
 
 ```bash
 sleep 2000 &
 ```
 
-### Purpose
+**Purpose:**  
+Create a second controlled process for demonstrating forced process termination.
 
-A second harmless background process was created so that forced termination could be demonstrated separately from the graceful termination test.
-
-### Observation
-
-The new process received PID:
+**Observed Result:**
 
 ```text
-1218
+PID: 1218
 ```
-
-Using a separate controlled process ensured that the SIGKILL demonstration did not affect any real system service.
 
 ---
 
-## Step 10 - Force Process Termination
-
-### Command
+### 10. Perform Forced Termination
 
 ```bash
 kill -9 1218
 ```
 
-### Purpose
+**Purpose:**  
+Send SIGKILL to the controlled process and demonstrate forced process termination.
 
-The command sends SIGKILL to PID `1218`.
-
-Unlike SIGTERM, SIGKILL forces the operating system to terminate the process.
-
-The process cannot handle or ignore SIGKILL.
-
-### Operational Consideration
-
-SIGKILL should generally be considered a last-resort action when normal process termination is unsuccessful or when immediate termination is specifically required.
-
-A typical troubleshooting approach is therefore:
-
-```text
-Investigate Process
-        ↓
-Attempt Graceful Termination
-        ↓
-Verify Result
-        ↓
-Use Forced Termination Only If Required
-```
+SIGKILL should generally be used when graceful termination is unsuccessful or when immediate forced termination is specifically required.
 
 ---
 
-## Step 11 - Verify SIGKILL Termination
-
-### Command
+### 11. Verify Forced Termination
 
 ```bash
 ps -p 1218 -o pid,ppid,user,stat,cmd
 ```
 
-### Purpose
-
-The process table was checked to determine whether PID `1218` still existed.
-
-### Observation
+**Observed Result:**
 
 No process entry was returned for PID `1218`.
 
-The shell also reported:
+The shell reported:
 
 ```text
 [1]+ Killed sleep 2000
 ```
 
-This confirmed successful forced termination.
+**Purpose:**  
+Verify that the SIGKILL action successfully terminated the process.
 
 ---
 
-## Step 12 - Final Cleanup Verification
-
-### Command
+### 12. Perform Final Cleanup Verification
 
 ```bash
 pgrep -a sleep
 ```
 
-### Purpose
+**Observed Result:**
 
-The final check searched for any remaining processes matching `sleep`.
+No output was returned.
 
-The `-a` option would display both the PID and command line for any matching processes.
-
-### Observation
-
-The command returned no output.
-
-This confirmed that no controlled `sleep` processes remained running after the lab.
-
-### Support Relevance
-
-Final cleanup verification helps ensure that temporary processes or resources created during troubleshooting do not remain active after the incident investigation is complete.
+**Purpose:**  
+Confirm that no controlled `sleep` processes remained running after the troubleshooting exercise.
 
 ---
 
-## SIGTERM vs SIGKILL
+## Verification Results
 
-### SIGTERM
+The following checks confirmed successful completion of the ticket:
 
-Example:
-
-```bash
-kill PID
-```
-
-SIGTERM requests graceful termination.
-
-It should normally be considered before forced termination because the application has an opportunity to perform normal shutdown operations.
-
-### SIGKILL
-
-Example:
-
-```bash
-kill -9 PID
-```
-
-SIGKILL forces immediate termination by the operating system.
-
-The target process cannot catch or ignore this signal.
-
-It should generally be reserved for situations where graceful termination is unsuccessful or forced termination is specifically required.
+- Running Linux processes were reviewed.
+- PID and PPID information was examined.
+- Live process activity was monitored.
+- A controlled application process was created and identified.
+- PID `1058` was investigated before corrective action.
+- Graceful termination using SIGTERM completed successfully.
+- The termination of PID `1058` was independently verified.
+- A second controlled process was created for SIGKILL testing.
+- PID `1218` was successfully terminated using SIGKILL.
+- Forced termination was independently verified.
+- Final cleanup verification confirmed that no controlled `sleep` processes remained running.
 
 ---
 
-## Process Investigation Workflow
+## Troubleshooting
 
-The complete troubleshooting workflow demonstrated during this lab was:
+The simulated application process was investigated before termination.
 
-```text
-Application Reported Unresponsive
-            ↓
-Review Running Processes
-            ↓
-Monitor System Activity
-            ↓
-Identify Target Process
-            ↓
-Confirm PID / PPID / User / State / Command
-            ↓
-Take Corrective Action
-            ↓
-Attempt Graceful Termination
-            ↓
-Verify Termination
-            ↓
-Use SIGKILL Only If Required
-            ↓
-Verify Again
-            ↓
-Perform Final Cleanup Check
-            ↓
-Close Incident
+The process PID, PPID, owner, state, runtime, and command were reviewed to ensure that the correct process had been identified.
+
+Graceful termination was attempted first using:
+
+```bash
+kill 1058
 ```
 
-This approach reduces the risk of taking corrective action against the wrong process and ensures that recovery is verified before incident closure.
+The result was verified before the incident workflow continued.
+
+A separate controlled process was used to demonstrate:
+
+```bash
+kill -9 1218
+```
+
+This demonstrated the difference between graceful termination using SIGTERM and forced termination using SIGKILL.
+
+The troubleshooting approach followed during the lab was:
+
+**Observe → Identify → Investigate → Act → Verify → Clean Up**
 
 ---
 
 ## Evidence
 
-The following screenshots were captured during the practical:
+The following screenshots were captured during the lab:
 
 1. `01-list-running-processes-ps-aux.png`
 2. `02-view-pid-ppid-ps-ef.png`
@@ -479,41 +309,58 @@ The following screenshots were captured during the practical:
 11. `11-verify-sigkill-termination.png`
 12. `12-final-process-cleanup-verification.png`
 
-Supporting evidence is maintained in the `Screenshots/` directory.
-
 ---
 
 ## Lessons Learned
 
-This lab demonstrated several important operational principles:
+During this lab, I learned how to:
 
-1. Do not immediately terminate a process simply because an application is reported as unresponsive.
-2. Identify and investigate the target process before taking corrective action.
-3. PID and PPID information can help understand process identity and relationships.
-4. Process state and runtime information provide useful investigation context.
-5. Real-time monitoring can help identify system resource issues.
-6. Graceful termination should normally be attempted before forced termination.
-7. SIGKILL should be treated as a stronger corrective action rather than the default response.
-8. Corrective actions should always be followed by verification.
-9. Temporary troubleshooting resources should be checked and cleaned up before incident closure.
-10. A structured investigation is more valuable than simply knowing individual Linux commands.
-
----
-
-## Interview Explanation
-
-A concise way to explain this lab during an interview:
-
-> I simulated an unresponsive application using a controlled Linux background process. I first reviewed and monitored the running processes, identified the target PID, and investigated its parent process, owner, state, runtime, and command. I then performed a graceful termination using SIGTERM and independently verified that the process had stopped. I also demonstrated SIGKILL on a separate controlled process to understand forced termination and verified the result. Finally, I checked that no test processes remained running. The main focus was following an investigate, act, and verify troubleshooting workflow rather than immediately killing a process.
+- Review running Linux processes.
+- Understand PID and PPID information.
+- Monitor processes using `top`.
+- Create and identify background processes.
+- Investigate process ownership and state.
+- Use SIGTERM for graceful process termination.
+- Use SIGKILL for forced process termination.
+- Understand why SIGKILL should not normally be the first corrective action.
+- Verify whether a process has actually terminated.
+- Perform final cleanup verification.
+- Follow a structured process troubleshooting workflow.
 
 ---
 
-## Final Outcome
+## Skills Demonstrated
 
-The controlled application processes were successfully identified, investigated, terminated, and verified.
+- Linux Process Management
+- Process Monitoring
+- PID and PPID Investigation
+- Process State Analysis
+- Background Process Management
+- SIGTERM
+- SIGKILL
+- Process Termination
+- Process Verification
+- Linux Troubleshooting
+- Incident Investigation
+- System Administration
+- Technical Documentation
 
-Both graceful termination using SIGTERM and forced termination using SIGKILL were demonstrated safely.
+---
 
-Final cleanup verification confirmed that no controlled test processes remained running.
+## Outcome
 
-**Ticket Status: Completed**
+Successfully completed the Linux Process Management lab by identifying and investigating controlled Linux processes, performing graceful and forced process termination, and verifying the result of each corrective action.
+
+The lab demonstrated a structured troubleshooting approach in which processes were investigated before action was taken and recovery was verified before the incident was considered resolved.
+
+---
+
+## Repository Information
+
+**Repository:** Enterprise-IT-Support-Lab  
+**Section:** 02-Linux  
+**Lab:** 07-Linux-Process-Management  
+**Documentation:** Documentation/Linux-Process-Management.md  
+**Screenshots:** Screenshots/  
+**Status:** Completed  
+**Version:** 1.0
