@@ -295,7 +295,7 @@ The practical task demonstrated a structured approach to Linux service managemen
 
 ---
 
-## Repository
+## Repository Information
 
 **Project:** Enterprise IT Support Lab  
 **Section:** Linux Administration  
