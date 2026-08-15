@@ -1050,11 +1050,10 @@ The lab demonstrated a structured troubleshooting process using service state, s
 
 ## Repository Information
 
-**Repository:** Enterprise-IT-Support-Lab
-**Section:** 02-Linux
-**Lab:** 06-Linux-Troubleshooting
-**Documentation:** Documentation/Linux-Troubleshooting.md
-**Screenshots:** Screenshots/
-**Status:** Completed
+**Repository:** Enterprise-IT-Support-Lab  
+**Section:** 02-Linux  
+**Lab:** 06-Linux-Troubleshooting  
+**Documentation:** Documentation/Linux-Troubleshooting.md  
+**Screenshots:** Screenshots/  
+**Status:** Completed  
 **Version:** 1.0
-
