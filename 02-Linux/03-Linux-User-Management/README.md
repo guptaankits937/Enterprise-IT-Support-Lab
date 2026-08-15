@@ -188,7 +188,7 @@ The practical task demonstrated a structured approach to Linux user administrati
 
 ---
 
-## Repository
+## Repository Information
 
 **Project:** Enterprise IT Support Lab  
 **Section:** Linux Administration  
