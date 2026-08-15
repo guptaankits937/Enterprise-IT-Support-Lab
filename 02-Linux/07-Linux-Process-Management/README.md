@@ -265,10 +265,7 @@ The practical task demonstrated a structured approach to Linux process investiga
 
 ## Repository Information
 
-**Repository:** Enterprise-IT-Support-Lab  
-**Section:** 02-Linux  
-**Lab:** 07-Linux-Process-Management  
-**Documentation:** Documentation/Linux-Process-Management.md  
-**Screenshots:** Screenshots/  
-**Status:** Completed  
-**Version:** 1.0
+**Project:** Enterprise IT Support Lab  
+**Section:** Linux Administration  
+**Lab:** 07 - Linux Process Management  
+**Status:** Completed
