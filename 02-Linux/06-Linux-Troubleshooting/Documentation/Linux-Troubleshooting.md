@@ -7,7 +7,7 @@
 **Date:** 11 August 2026
 **Operating System:** Ubuntu Server
 
-**Objective:**
+### Objective:
 
 Learn how to investigate and troubleshoot SSH service availability on a Linux server using standard Linux service-management, networking, and logging tools.
 
@@ -24,7 +24,7 @@ The lab demonstrates how to inspect SSH service and socket states, understand sy
 
 ---
 
-# Scenario
+## Scenario
 
 The IT Operations team needed to investigate and validate SSH availability on an Ubuntu Server.
 
@@ -42,7 +42,7 @@ The existing SOC-LAB network was preserved. A third VirtualBox adapter was added
 
 ---
 
-# Environment
+## Environment
 
 * Ubuntu Server
 * Windows 10 Host
@@ -67,7 +67,7 @@ The existing SOC-LAB network was preserved. A third VirtualBox adapter was added
 
 ---
 
-# Commands Used
+## Commands Used
 
 ## 1. Verify SSH Service Status
 
@@ -134,7 +134,7 @@ This confirmed that an inactive `ssh.service` did not automatically mean that SS
 
 ---
 
-# Understanding SSH Socket Activation
+## Understanding SSH Socket Activation
 
 Systemd can use socket activation to listen for incoming connections and start the associated service when required.
 
@@ -344,7 +344,7 @@ This demonstrated how `journalctl` can be used during Linux incident investigati
 
 ---
 
-# Additional SSH Log Investigation
+## Additional SSH Log Investigation
 
 The SSH service journal was also inspected:
 
@@ -370,7 +370,7 @@ This check was part of the troubleshooting process but was not retained as one o
 
 ---
 
-# End-to-End Remote Access Verification
+## End-to-End Remote Access Verification
 
 After restoring `ssh.socket`, remote access was tested from the Windows host.
 
@@ -386,7 +386,7 @@ This indicated that the remaining problem was likely related to network connecti
 
 ---
 
-# Network Connectivity Troubleshooting
+## Network Connectivity Troubleshooting
 
 ## Issue
 
@@ -458,7 +458,7 @@ However, further VirtualBox investigation showed that they were attached to diff
 
 ---
 
-# VirtualBox Network Investigation
+## VirtualBox Network Investigation
 
 The Ubuntu VM network configuration was inspected.
 
@@ -497,7 +497,7 @@ Therefore, the Windows host could not directly reach `enp0s8`, even though both 
 
 ---
 
-# Network Design Decision
+## Network Design Decision
 
 The `SOC-LAB` Internal Network was intentionally preserved because it would be required for the isolated cybersecurity lab environment.
 
@@ -521,7 +521,7 @@ This separated:
 
 ---
 
-# Configure Adapter 3
+## Configure Adapter 3
 
 The Ubuntu VM was cleanly powered off before modifying VirtualBox network hardware.
 
@@ -543,7 +543,7 @@ Initially, the interface was down and had no configured IPv4 address.
 
 ---
 
-# Inspect Existing Netplan Configuration
+## Inspect Existing Netplan Configuration
 
 The available Netplan file was identified:
 
@@ -574,7 +574,7 @@ The new `enp0s9` interface had not yet been configured.
 
 ---
 
-# Separate SOC-LAB and Management Subnets
+## Separate SOC-LAB and Management Subnets
 
 The existing SOC-LAB interface already used:
 
@@ -606,7 +606,7 @@ as the network mask.
 
 ---
 
-# Configure VirtualBox Host-Only DHCP
+## Configure VirtualBox Host-Only DHCP
 
 The VirtualBox Host-Only DHCP configuration was also moved to the new subnet.
 
@@ -638,7 +638,7 @@ Subnet Mask: 255.255.255.0
 
 ---
 
-# Backup Netplan Configuration
+## Backup Netplan Configuration
 
 Before modifying Ubuntu network configuration, the existing Netplan file was backed up:
 
@@ -654,7 +654,7 @@ This provides a recovery option if a configuration error causes connectivity pro
 
 ---
 
-# Configure the Host-Only Interface
+## Configure the Host-Only Interface
 
 The Netplan file was opened:
 
@@ -681,7 +681,7 @@ enp0s9 → Host-Only → 192.168.57.20/24
 
 ---
 
-# Netplan Configuration Troubleshooting
+## Netplan Configuration Troubleshooting
 
 ## Issue
 
@@ -729,7 +729,7 @@ This demonstrated the importance of validating network configuration before appl
 
 ---
 
-# Apply the Network Configuration
+## Apply the Network Configuration
 
 After successful validation:
 
@@ -757,7 +757,7 @@ Confirm that the dedicated Host-Only management interface was configured success
 
 ---
 
-# Verify Host-to-VM Connectivity
+## Verify Host-to-VM Connectivity
 
 From Windows:
 
@@ -828,7 +828,7 @@ The successful remote session confirmed:
 
 ---
 
-# Troubleshooting Summary
+## Troubleshooting Summary
 
 Two separate troubleshooting situations occurred during this lab.
 
@@ -881,7 +881,7 @@ The network-connectivity issue was separate from the intentionally simulated SSH
 
 ---
 
-# Final Network Architecture
+## Final Network Architecture
 
 ```text
 Adapter 1 / enp0s3
@@ -910,7 +910,7 @@ The final design separates internet access, isolated SOC-LAB communication, and 
 
 ---
 
-# Verification Results
+## Verification Results
 
 The lab successfully demonstrated that:
 
@@ -938,7 +938,7 @@ The lab successfully demonstrated that:
 
 ---
 
-# Evidence
+## Evidence
 
 Screenshots:
 
@@ -953,7 +953,7 @@ Screenshots:
 
 ---
 
-# Lessons Learned
+## Lessons Learned
 
 * Learned how systemd socket activation affects SSH service behavior.
 * Understood the difference between `ssh.service` and `ssh.socket`.
@@ -1009,7 +1009,7 @@ Screenshots:
 
 ---
 
-# Outcome
+## Outcome
 
 Successfully completed the Linux Service Management & Troubleshooting lab by investigating SSH service behavior, identifying systemd socket activation, simulating a controlled SSH availability incident, verifying the outage, restoring SSH availability, reviewing system logs, and validating recovery.
 
