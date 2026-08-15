@@ -1,12 +1,17 @@
 # Linux Group Management
 
-## Overview
+## Lab Information
 
-This lab demonstrates practical Linux group administration in an Ubuntu Server environment.
+**Lab Name:** Linux Group Management  
+**Project:** Enterprise IT Support Lab  
+**Date:** 08 August 2026  
+**Operating System:** Ubuntu Server  
 
-The scenario simulates an IT Operations request to create a Linux group, provide an existing user with group-based access, verify the membership, revoke the access, and remove the temporary group after completing the task.
+### Objective
 
-This lab is part of the **Enterprise IT Support Lab** portfolio.
+Learn how to create, verify, assign, remove, and delete Linux groups using standard system administration commands.
+
+The lab also demonstrates the difference between primary and supplementary groups and shows how group membership can be used to manage user access.
 
 ---
 
@@ -34,76 +39,291 @@ After testing the group membership, the user's access was removed and the tempor
 ## Environment
 
 - Ubuntu Server
-- Linux Terminal
+- Terminal
 - Sudo Privileges
 - Local User and Group Management
-- Existing User Account: `john`
+- Existing user account: `john`
 
 ---
 
-## Tasks Completed
+## Lab Duration
 
-During this lab, I performed the following tasks:
-
-1. Verified the current Linux user and group memberships.
-2. Checked whether the `it-support` group already existed.
-3. Created the `it-support` group.
-4. Verified the new group and its Group ID (GID).
-5. Verified the existing `john` user.
-6. Added `john` to the `it-support` supplementary group.
-7. Verified the updated group membership using `id` and `getent`.
-8. Confirmed that the user's primary group remained unchanged.
-9. Removed `john` from the `it-support` group.
-10. Verified successful access removal.
-11. Deleted the temporary `it-support` group.
-12. Verified that the group no longer existed.
-13. Documented the implementation and captured supporting evidence.
+**Estimated Time:** 20–30 Minutes
 
 ---
 
-## Key Commands
+## Commands Used
+
+### 1. Check Current Logged-in User
 
 ```bash
 whoami
 ```
 
+**Purpose:**  
+Verify the currently logged-in user before performing administrative tasks.
+
+The command confirmed that the administrative session was being performed using the expected account.
+
+---
+
+### 2. Display Current User and Group Information
+
 ```bash
 id
 ```
+
+**Purpose:**  
+Display information about the currently logged-in user, including:
+
+- User ID (UID)
+- Primary Group ID (GID)
+- Supplementary group memberships
+
+This provided a baseline for understanding Linux user and group membership.
+
+---
+
+### 3. Check Whether the Group Already Exists
 
 ```bash
 getent group it-support
 ```
 
+**Purpose:**  
+Verify whether a group named `it-support` already existed before attempting to create it.
+
+No output was returned, confirming that the group did not exist.
+
+---
+
+### 4. Create the IT Support Group
+
 ```bash
 sudo groupadd it-support
 ```
+
+**Purpose:**  
+Create a new Linux group named `it-support`.
+
+The command completed successfully without returning an error.
+
+---
+
+### 5. Verify the New Group
+
+```bash
+getent group it-support
+```
+
+**Result:**
+
+```text
+it-support:x:1002:
+```
+
+**Purpose:**  
+Confirm that the `it-support` group was created successfully.
+
+The result showed:
+
+- Group name: `it-support`
+- Group ID (GID): `1002`
+- No supplementary members assigned yet
+
+---
+
+### 6. Verify the Existing User
 
 ```bash
 id john
 ```
 
+**Result before group assignment:**
+
+```text
+uid=1001(john) gid=1001(john) groups=1001(john)
+```
+
+**Purpose:**  
+Confirm that the existing user `john` was available before modifying group membership.
+
+The output showed that `john` initially belonged only to the user's primary group.
+
+---
+
+### 7. Add User to the IT Support Group
+
 ```bash
 sudo usermod -aG it-support john
 ```
+
+**Purpose:**  
+Add the existing user `john` to the `it-support` supplementary group.
+
+#### Understanding `-aG`
+
+- `-a` means **append**.
+- `-G` specifies the supplementary group or groups.
+
+Using `-aG` is important because it adds the new group membership without replacing the user's existing supplementary group memberships.
+
+---
+
+### 8. Verify Updated User Membership
+
+```bash
+id john
+```
+
+**Result after group assignment:**
+
+```text
+uid=1001(john) gid=1001(john) groups=1001(john),1002(it-support)
+```
+
+**Purpose:**  
+Verify that `john` had successfully been added to the `it-support` group.
+
+The output confirmed that:
+
+- `john` remained the user's primary group.
+- `it-support` was added as a supplementary group.
+
+---
+
+### 9. Verify Group Membership Directly
+
+```bash
+getent group it-support
+```
+
+**Result:**
+
+```text
+it-support:x:1002:john
+```
+
+**Purpose:**  
+Verify the group membership directly from the Linux group database.
+
+The result confirmed that `john` was a member of the `it-support` group.
+
+---
+
+### Primary vs Supplementary Groups
+
+Linux users have a **primary group** and may also belong to one or more **supplementary groups**.
+
+For the user `john`:
+
+```text
+gid=1001(john)
+```
+
+shows that `john` is the primary group.
+
+After adding the user to `it-support`:
+
+```text
+groups=1001(john),1002(it-support)
+```
+
+shows that `it-support` is an additional supplementary group.
+
+Supplementary groups are commonly used to grant users access to shared resources without changing their primary group.
+
+---
+
+### 10. Remove User from the IT Support Group
 
 ```bash
 sudo gpasswd -d john it-support
 ```
 
+**Result:**
+
+```text
+Removing user john from group it-support
+```
+
+**Purpose:**  
+Remove `john` from the `it-support` supplementary group when the temporary access was no longer required.
+
+This demonstrates access revocation as part of the user access lifecycle.
+
+---
+
+### 11. Verify User Access Removal
+
+```bash
+id john
+```
+
+**Result:**
+
+```text
+uid=1001(john) gid=1001(john) groups=1001(john)
+```
+
+**Purpose:**  
+Confirm that `john` was no longer a member of the `it-support` group.
+
+The output showed that the user had returned to only the original primary group membership.
+
+---
+
+### 12. Verify the Group After User Removal
+
+```bash
+getent group it-support
+```
+
+**Result:**
+
+```text
+it-support:x:1002:
+```
+
+**Purpose:**  
+Confirm that the `it-support` group still existed but no longer contained `john` as a supplementary member.
+
+---
+
+### 13. Delete the Temporary Group
+
 ```bash
 sudo groupdel it-support
 ```
 
+**Purpose:**  
+Delete the `it-support` group after the access-management test was completed.
+
+This demonstrates proper cleanup of temporary administrative resources.
+
 ---
 
-## Verification
+### 14. Verify Group Deletion
 
-The following checks confirmed that the task was completed successfully:
+```bash
+getent group it-support
+```
 
+**Purpose:**  
+Confirm that the group had been successfully deleted.
+
+No output was returned, confirming that `it-support` no longer existed.
+
+---
+
+## Verification Results
+
+The following checks confirmed successful completion of the ticket:
+
+- Current user and group memberships were verified.
 - The `it-support` group was created successfully.
 - The new group received GID `1002`.
-- The existing `john` user was verified.
+- Existing user `john` was verified.
 - `john` was successfully added to the supplementary group.
 - Membership was verified using both `id` and `getent`.
 - The user's primary group remained unchanged.
@@ -134,24 +354,33 @@ Verification commands were performed after each major change to confirm that the
 
 ## Evidence
 
-Screenshots captured during the practical lab include:
+The following screenshots were captured during the lab:
 
-- `01-current-user-and-groups.png`
-- `02-create-and-verify-group.png`
-- `03-id-john-before-group.png`
-- `04-add-john-to-it-support.png`
-- `05-remove-john-from-group.png`
-- `06-delete-and-verify-group.png`
-
-Supporting screenshots are available in the [`Screenshots`](./Screenshots/) directory.
+1. `01-current-user-and-groups.png` — Verified the current user and group information.
+2. `02-create-and-verify-group.png` — Confirmed creation and verification of the `it-support` group.
+3. `03-id-john-before-group.png` — Verified `john` before supplementary group assignment.
+4. `04-add-john-to-it-support.png` — Confirmed successful supplementary group assignment.
+5. `05-remove-john-from-group.png` — Confirmed removal of `john` from the group.
+6. `06-delete-and-verify-group.png` — Confirmed deletion and final verification of the temporary group.
 
 ---
 
-## Detailed Documentation
+## Lessons Learned
 
-Complete technical documentation, including command explanations, verification results, administrative notes, and lessons learned, is available here:
+During this lab, I learned how to:
 
-[`Linux-Group-Management.md`](./Documentation/Linux-Group-Management.md)
+- Verify Linux user and group information.
+- Understand how Linux Group IDs (GIDs) identify groups.
+- Create and verify a new Linux group.
+- Add an existing user to a supplementary group.
+- Understand the purpose of the `usermod -aG` command.
+- Understand the difference between primary and supplementary groups.
+- Verify group membership using multiple commands.
+- Remove a user's supplementary group access.
+- Verify successful access revocation.
+- Delete a temporary Linux group.
+- Perform verification after administrative changes.
+- Understand the importance of cleanup after temporary access changes.
 
 ---
 
@@ -167,42 +396,21 @@ Complete technical documentation, including command explanations, verification r
 - Access Revocation
 - Basic Troubleshooting
 - System Administration
-- Incident/Ticket Documentation
 - Technical Documentation
-
----
-
-## Interview Relevance
-
-This lab provides practical examples that can be discussed during IT Support, Application Support, System Administration, and junior cybersecurity interviews.
-
-Examples include:
-
-- How to create and verify a Linux group.
-- How Linux Group IDs (GIDs) are used.
-- How to add a user to a supplementary group.
-- Why `usermod -aG` is important when modifying group membership.
-- How to distinguish between primary and supplementary groups.
-- How to verify group membership using `id` and `getent`.
-- How to revoke group-based access.
-- How to verify and clean up temporary administrative changes.
 
 ---
 
 ## Outcome
 
-The Linux group was successfully created and verified, and the existing user was successfully assigned to the supplementary group.
-
-The user's access was later revoked, the change was verified, and the temporary group was successfully removed.
-
-The practical task demonstrated a structured approach to Linux group administration, access management, verification, cleanup, and technical documentation.
+Successfully completed the Linux Group Management lab by creating and verifying a Linux group, assigning an existing user to the group, validating supplementary group membership, revoking the user's access, and removing the temporary group using standard Linux administration practices.
 
 ---
 
 ## Repository Information
 
 **Repository:** Enterprise-IT-Support-Lab  
-**Section:** 02-Linux  
-**Lab:** 04-Linux-Group-Management  
+**Lab:** `02-Linux/04-Linux-Group-Management/`  
+**Documentation:** `02-Linux/04-Linux-Group-Management/Documentation/Linux-Group-Management.md`  
+**Screenshots:** `02-Linux/04-Linux-Group-Management/Screenshots/`  
 **Status:** Completed  
 **Version:** 1.0
