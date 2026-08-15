@@ -2,13 +2,11 @@
 
 ## Overview
 
-This lab demonstrates Linux file permission and ownership management in an Ubuntu Server environment.
+This lab demonstrates practical Linux file permission and ownership management in an Ubuntu Server environment.
 
-The objective was to create a test file, inspect its default permissions, modify permissions using `chmod`, change file ownership using `chown`, and verify how Linux permissions control access for different users.
+The scenario simulates an IT Operations requirement to secure an internal support report, restrict access using Linux permissions, transfer ownership to an authorized user, and verify access from different user contexts.
 
-The lab also demonstrates practical access testing and basic troubleshooting during Linux system administration.
-
-This lab is part of the **Enterprise IT Support Lab** project.
+This lab is part of the **Enterprise IT Support Lab** portfolio.
 
 ---
 
@@ -17,7 +15,7 @@ This lab is part of the **Enterprise IT Support Lab** project.
 **Ticket ID:** INC-0003  
 **Department:** IT Operations  
 **Priority:** Medium  
-**Status:** Completed
+**Status:** Completed  
 
 ---
 
@@ -25,132 +23,133 @@ This lab is part of the **Enterprise IT Support Lab** project.
 
 The IT Operations team needed to secure a support report containing internal incident information.
 
-A test file named `support-report.txt` was created and its permissions were reviewed.
+A test file named `support-report.txt` was created and its default permissions were reviewed.
 
-The file permissions were changed to restrict access, ownership was transferred to the user `john`, and access was tested from different user contexts.
+The permissions were configured so that:
 
-The temporary lab resources were removed after completing the verification process.
+- The file owner could read and modify the file.
+- Members of the assigned group could read the file.
+- Other users had no access.
+
+Ownership was transferred to the existing user `john`, and access was tested from different user contexts.
+
+Temporary lab resources were removed after completing the testing.
+
+---
+
+## Environment
+
+- Ubuntu Server
+- Linux Terminal
+- Sudo Privileges
+- Local User Management
+- Existing Administrative User: `ankit`
+- Existing Test User: `john`
+- Test File: `support-report.txt`
+- Test Directory: `permissions-lab`
 
 ---
 
 ## Tasks Completed
 
-- Verified the current logged-in user and environment.
-- Created a temporary permissions lab directory.
-- Created the `support-report.txt` test file.
-- Reviewed the file's default permissions.
-- Changed file permissions to `640` using `chmod`.
-- Changed file ownership using `chown`.
-- Changed both the file owner and group.
-- Tested access from the `ankit` user account.
-- Verified owner access using the `john` account.
-- Added test content as the file owner.
-- Verified successful owner read/write access.
-- Verified that unauthorized access was denied.
-- Restored file ownership before cleanup.
-- Removed the temporary lab directory and test file.
+During this lab, I performed the following tasks:
+
+1. Verified the current user and environment.
+2. Created a temporary permissions lab directory.
+3. Created the `support-report.txt` test file.
+4. Reviewed the file's default permissions.
+5. Changed file permissions to `640` using `chmod`.
+6. Verified the updated permissions.
+7. Changed file ownership using `chown`.
+8. Changed both the file owner and group.
+9. Tested access from the `ankit` user account.
+10. Verified owner access using the `john` account.
+11. Tested owner write permission.
+12. Verified owner read permission.
+13. Confirmed that unauthorized access was denied.
+14. Troubleshot an incorrect filename during an ownership change.
+15. Restored ownership before cleanup.
+16. Removed the temporary lab resources.
+17. Documented the implementation and captured supporting evidence.
 
 ---
 
-## Commands Used
+## Key Commands
 
 ```bash
 whoami
+```
+
+```bash
 pwd
+```
+
+```bash
 id
+```
 
+```bash
 mkdir permissions-lab
-cd permissions-lab
+```
+
+```bash
 touch support-report.txt
+```
+
+```bash
 ls -l
+```
 
+```bash
 chmod 640 support-report.txt
-ls -l support-report.txt
+```
 
-id john
+```bash
 sudo chown john support-report.txt
-ls -l support-report.txt
+```
 
+```bash
 sudo chown john:john support-report.txt
-ls -l support-report.txt
+```
 
-cat support-report.txt
+```bash
 sudo -u john cat support-report.txt
+```
 
+```bash
 sudo -u john sh -c 'echo "IT Support Incident Report" > support-report.txt'
-sudo -u john cat support-report.txt
-cat support-report.txt
+```
 
+```bash
 sudo chown ankit:ankit support-report.txt
-cd ..
+```
+
+```bash
 rm -r permissions-lab
 ```
 
 ---
 
-## Understanding Permission 640
+## Verification
 
-The permission value `640` represents:
+The following checks confirmed successful completion of the practical task:
 
-- **6 — Owner:** Read + Write (`rw-`)
-- **4 — Group:** Read only (`r--`)
-- **0 — Others:** No permissions (`---`)
-
-This results in:
-
-```text
--rw-r-----
-```
-
-This configuration allows the file owner to read and modify the file, allows members of the assigned group to read it, and prevents all other users from accessing it.
-
----
-
-## Ownership and Access Verification
-
-The file ownership was changed from:
-
-```text
-ankit ankit
-```
-
-to:
-
-```text
-john ankit
-```
-
-and then to:
-
-```text
-john john
-```
-
-using the `chown` command.
-
-With permissions set to `640` and ownership assigned to `john:john`, the `ankit` user received:
-
-```text
-Permission denied
-```
-
-when attempting to read the file.
-
-The `john` user was able to write:
-
-```text
-IT Support Incident Report
-```
-
-and successfully read the same content.
-
-This demonstrated that the configured Linux permissions were actively controlling access to the file.
+- Default file permissions were inspected.
+- Permissions were successfully changed to `640`.
+- File ownership was successfully transferred to `john`.
+- Both owner and group were successfully changed to `john:john`.
+- Unauthorized access from the `ankit` context was denied.
+- The `john` user could access the protected file.
+- Owner write access was successfully tested.
+- Owner read access was successfully verified.
+- Permission restrictions remained effective after content was added.
+- Temporary lab resources were removed after testing.
 
 ---
 
 ## Troubleshooting
 
-During the ownership change, an incorrect filename was initially entered:
+During the ownership change, an incorrect filename was entered:
 
 ```bash
 sudo chown john suport-report.txt
@@ -170,80 +169,84 @@ sudo chown john support-report.txt
 
 The command then completed successfully.
 
-This demonstrates a basic troubleshooting process:
-
-1. Review the error message.
-2. Verify the command and target filename.
-3. Correct the input.
-4. Re-run the command.
-5. Verify the result.
+This demonstrated a basic troubleshooting process of reviewing the error, identifying the incorrect filename, correcting the command, and verifying the result.
 
 ---
 
-## Cleanup Note
+## Evidence
 
-Before cleanup, the following ownership restoration command was executed:
+Screenshots captured during the practical lab include:
 
-```bash
-sudo chown ankit:ankit support-report.txt
-```
+- `01-current-user-environment.png`
+- `02-create-file-default-permissions.png`
+- `03-change-file-permissions-chmod.png`
+- `04-change-file-ownership-chown.png`
+- `05-change-owner-and-group.png`
+- `06-test-file-access-permissions.png`
+- `07-verify-owner-read-write-access.png`
+- `08-restore-ownership-and-cleanup.png`
 
-The temporary `permissions-lab` directory was then removed.
+Supporting screenshots are available in the [`Screenshots`](./Screenshots/) directory.
 
-A separate `ls -l` ownership verification was not captured before the directory was deleted, so the documentation does not claim a post-restoration verification result.
+---
+
+## Detailed Documentation
+
+Complete technical documentation, including command explanations, permission calculations, access testing, troubleshooting, verification results, and lessons learned, is available here:
+
+[`Linux-File-Permissions.md`](./Documentation/Linux-File-Permissions.md)
 
 ---
 
 ## Skills Demonstrated
 
 - Linux File Permission Management
+- Linux Access Control
 - `chmod` Numeric Permissions
 - Linux File Ownership
 - `chown` Administration
 - Owner, Group, and Others Permissions
-- Read and Write Access Control
-- User Context Testing
 - Access Verification
-- Basic Linux Troubleshooting
+- User Context Testing
 - Principle of Least Privilege
+- Linux Troubleshooting
 - System Administration
+- Incident/Ticket Documentation
 - Technical Documentation
 
 ---
 
-## Evidence
+## Interview Relevance
 
-Eight screenshots were captured during the lab:
+This lab provides practical examples that can be discussed during IT Support, Application Support, System Administration, and junior cybersecurity interviews.
 
-1. `01-current-user-environment.png`
-2. `02-create-file-default-permissions.png`
-3. `03-change-file-permissions-chmod.png`
-4. `04-change-file-ownership-chown.png`
-5. `05-change-owner-and-group.png`
-6. `06-test-file-access-permissions.png`
-7. `07-verify-owner-read-write-access.png`
-8. `08-restore-ownership-and-cleanup.png`
+Examples include:
 
-Detailed commands, verification results, troubleshooting notes, and screenshots are maintained within the lab documentation and evidence folders.
+- How Linux file permissions work.
+- How owner, group, and others permissions are represented.
+- How numeric permission `640` is calculated.
+- How to modify permissions using `chmod`.
+- How to change file ownership using `chown`.
+- How to test access from different user contexts.
+- How Linux prevents unauthorized file access.
+- How to troubleshoot an incorrect filename in an administrative command.
+- How the principle of least privilege can be applied using Linux permissions.
 
 ---
 
 ## Outcome
 
-Successfully demonstrated Linux file permission and ownership management using `chmod` and `chown`.
+The test file was successfully secured using Linux file permissions and ownership controls.
 
-The lab verified that file permissions can restrict unauthorized access while allowing the designated owner to read and modify protected files.
+The designated owner could read and modify the protected file while unauthorized access was denied.
 
-The temporary lab resources were removed after testing.
+The practical task demonstrated Linux access control, ownership management, verification, troubleshooting, and cleanup using standard system administration practices.
 
 ---
 
 ## Repository Information
 
-**Repository:** Enterprise-IT-Support-Lab  
-**Section:** 02-Linux  
-**Lab:** 05-Linux-File-Permissions  
-**Documentation:** Documentation/Linux-File-Permissions.md  
-**Screenshots:** Screenshots/  
-**Status:** Completed  
-**Version:** 1.0
+**Project:** Enterprise IT Support Lab  
+**Section:** Linux Administration  
+**Lab:** 05 - Linux File Permissions  
+**Status:** Completed
