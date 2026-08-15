@@ -7,7 +7,7 @@
 **Date:** 10 August 2026  
 **Operating System:** Ubuntu Server
 
-**Objective:**
+### Objective:
 
 Learn how to manage Linux file permissions and ownership using standard system administration commands.
 
@@ -24,7 +24,7 @@ The lab demonstrates how to inspect file permissions, modify access using `chmod
 
 ---
 
-# Scenario
+## Scenario
 
 The IT Operations team needed to secure a support report containing internal incident information.
 
@@ -44,7 +44,7 @@ After successful testing, the temporary lab resources were removed.
 
 ---
 
-# Environment
+## Environment
 
 - Ubuntu Server
 - Terminal
@@ -63,9 +63,9 @@ After successful testing, the temporary lab resources were removed.
 
 ---
 
-# Commands Used
+## Commands Used
 
-## 1. Verify Current Logged-in User
+### 1. Verify Current Logged-in User
 
 ```bash
 whoami
@@ -83,7 +83,7 @@ Verify which user account was currently being used before performing file permis
 
 ---
 
-## 2. Verify Current Working Directory
+### 2. Verify Current Working Directory
 
 ```bash
 pwd
@@ -101,7 +101,7 @@ Confirm the current working directory before creating the temporary lab environm
 
 ---
 
-## 3. Display Current User Information
+### 3. Display Current User Information
 
 ```bash
 id
@@ -119,7 +119,7 @@ This established the user and group context before modifying file permissions.
 
 ---
 
-## 4. Create the Lab Directory
+### 4. Create the Lab Directory
 
 ```bash
 mkdir permissions-lab
@@ -131,7 +131,7 @@ Create a dedicated temporary directory for the file-permissions lab.
 
 ---
 
-## 5. Enter the Lab Directory
+### 5. Enter the Lab Directory
 
 ```bash
 cd permissions-lab
@@ -143,7 +143,7 @@ Move into the newly created lab directory before creating the test file.
 
 ---
 
-## 6. Create the Test File
+### 6. Create the Test File
 
 ```bash
 touch support-report.txt
@@ -157,7 +157,7 @@ The file represents an internal IT support report requiring controlled access.
 
 ---
 
-## 7. Inspect Default File Permissions
+### 7. Inspect Default File Permissions
 
 ```bash
 ls -l
@@ -543,7 +543,7 @@ This demonstrated that the access restrictions remained effective after content 
 
 ---
 
-# Troubleshooting
+## Troubleshooting
 
 ## Issue
 
@@ -596,7 +596,7 @@ This demonstrates the importance of carefully reviewing command syntax and Linux
 
 ---
 
-# Cleanup
+## Cleanup
 
 Before removing the temporary lab resources, ownership was restored using:
 
@@ -638,7 +638,7 @@ Therefore, this documentation records that the ownership restoration command was
 
 ---
 
-# Verification Results
+## Verification Results
 
 The lab successfully demonstrated that:
 
@@ -658,7 +658,7 @@ The lab successfully demonstrated that:
 
 ---
 
-# Evidence
+## Evidence
 
 Screenshots:
 
@@ -673,7 +673,7 @@ Screenshots:
 
 ---
 
-# Lessons Learned
+## Lessons Learned
 
 - Learned how Linux represents file permissions.
 - Understood owner, group, and others permission categories.
@@ -710,7 +710,7 @@ Screenshots:
 
 ---
 
-# Outcome
+## Outcome
 
 Successfully completed the Linux File Permissions lab by creating and securing a test file, modifying its permissions using `chmod`, changing ownership using `chown`, and testing access from different user contexts.
 
@@ -723,9 +723,8 @@ The exercise also demonstrated basic Linux troubleshooting and the importance of
 ## Repository Information
 
 **Repository:** Enterprise-IT-Support-Lab  
-**Section:** 02-Linux  
-**Lab:** 05-Linux-File-Permissions  
-**Documentation:** Documentation/Linux-File-Permissions.md  
-**Screenshots:** Screenshots/  
+**Lab:** `02-Linux/05-Linux-File-Permissions/`  
+**Documentation:** `02-Linux/05-Linux-File-Permissions/Documentation/Linux-File-Permissions.md`  
+**Screenshots:** `02-Linux/05-Linux-File-Permissions/Screenshots/`  
 **Status:** Completed  
 **Version:** 1.0
